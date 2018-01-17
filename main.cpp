@@ -21,23 +21,36 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include <Eigen/Dense>
+
 #define PI 3.1415926535897939
 
+typedef Eigen::Matrix<float, 4, 1> vec4;
+typedef Eigen::Matrix<float, 3, 1> vec3;
+typedef Eigen::Matrix<float, 2, 1> vec2;
+
+typedef Eigen::Matrix<float, 4, 4> mat4;
+typedef Eigen::Matrix<float, 3, 3> mat3;
+typedef Eigen::Matrix<float, 2, 2> mat2;
+
+#include "gl_helpers.cpp"
+#include "shapes.cpp"
+
+
+#define WIDTH 512*2
+#define HEIGHT 512*2
+
+
+
+/*
 #include	"glm/glm.hpp"
 #include	"glm/gtc/matrix_transform.hpp"
-
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-
-#include "gl_helpers.cpp"
 #include "camera.cpp"
-#include "shapes.cpp"
 #include "planets.h"
-
-#define WIDTH 512*2
-#define HEIGHT 512*2
 
 //#define WIREFRAME
 #define DEBUG
@@ -53,11 +66,11 @@
 
 // #define V_PUSH(X,a,b,c) X.push_back(a); X.push_back(b); X.push_back(c);
 #define V_PUSH(X,a,b,c) X.push_back(vec3(a,b,c));	//Re-wrttien for GLM.
-
+*/
 
 using namespace std;
 
-Camera cam;
+// Camera cam;
 
 float speed = 1;
 /*
@@ -195,6 +208,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 
     float move = PI/200.f;
 
+/*
 		if(key == GLFW_KEY_E)
 			cam.rotateCamera(0,-move);
 		if(key == GLFW_KEY_Q)
@@ -228,9 +242,10 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		if(length(cam.pos) > 10){
 			cam.pos = cam.pos/1.01f;
 		}
-		
+	*/	
 
 }
+
 bool mousePressed;
 void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
@@ -245,34 +260,35 @@ void mousePosCallback(GLFWwindow* window, double xpos, double ypos)
   int vp[4];
   glGetIntegerv(GL_VIEWPORT, vp);
 
-  vec2 newPos = vec2(xpos/(double)vp[2], -ypos/(double)vp[3])*2.f - vec2(1.f);
+  //vec2 newPos = vec2(xpos/(double)vp[2], -ypos/(double)vp[3])*2.f - vec2(1.f);
 
-  vec2 diff = newPos - mousePos;
+//  vec2 diff = newPos - mousePos;
+/*
   if(mousePressed)
     cam.rotateCamera(-diff.x, diff.y);
-
-  mousePos = newPos;
+*/
+ // mousePos = newPos;
 }
 
 
 void Update_Perspective(){
-	glm::mat4 perspectiveMatrix = glm::perspective(torad(80.f), 1.f, 0.1f, 20.f);
+/*	glm::mat4 perspectiveMatrix = glm::perspective(torad(80.f), 1.f, 0.1f, 20.f);
   glUniformMatrix4fv(glGetUniformLocation(glstuff.prog, "perspectiveMatrix"),
             1,
             false,
             &perspectiveMatrix[0][0]);
+*/
 }
 
 void Update_Uniforms(){
+/*
 	glm::mat4 camMatrix = cam.getMatrix();
   glUniformMatrix4fv(glGetUniformLocation(glstuff.prog, "cameraMatrix"),
             1,
             false,
             &camMatrix[0][0]);
-
+*/
 }
-	
-
 
 	
 void Render(Object objs[4]){
@@ -306,15 +322,17 @@ void Render(Object objs[4]){
 
 		//This bit is currently broken. Incorrectly adapting the modelviews.
 			//Update model-view uniform
-			mat4 modelview = mat4(s->modelview); //Supposed to set it to the predicesors.
+			//mat4 modelview = mat4(s->modelview); //Supposed to set it to the predicesors.
 			for(int j=i; j>0; j--){
-				modelview[3] += objs[j].modelview[3];
+//				modelview[3][3] += objs[j].modelview[3];
 			}
 	
+/*
 		glUniformMatrix4fv(glGetUniformLocation(glstuff.prog, "modelviewMatrix"),
 	            1,
 	            false,
-	            &modelview[0][0]);
+	            &modelview[0]);
+*/
 
 		//Setup texture: (IE, load them)
 		if(((*s).texture.data) != NULL){
@@ -360,13 +378,14 @@ int main(int argc, char * argv[]){
 	
 	#define SPHERE_QUAL 128	
 
-	cam.pos = glm::vec3(0,0,4);
+//	cam.pos = glm::vec3(0,0,4);
 	Object bodies[4];
 	
 	#define mylog(X) log(X)/50.f //Note, this is from KM, to 0->10ish space.
 
 	#define tilttovec(X)	vec3(0,cos(X),0)
 
+/*
 	float sun_r		=	mylog(SUN_RADIUS);
 	float earth_r = mylog(EARTH_RADIUS);
 	float moon_r  = mylog(MOON_RADIUS);
@@ -389,7 +408,7 @@ int main(int argc, char * argv[]){
 
 	moveObj(&EARTH,vec3(0,0,mylog(EARTH_P_DIST)*5));
 	moveObj(&MOON,vec3(0,0,mylog(MOON_P_DIST)*5));
-
+*/
 	speed =0.01;
 	while(!glfwWindowShouldClose(window))
 	{ //Main loop.
@@ -398,12 +417,12 @@ int main(int argc, char * argv[]){
 		glfwPollEvents();
 
 		
-		rotateObjPos(&SUN,tilttovec(torad(SUN_DEG)),SUN_ROTATION*speed);
-		rotateObjPos(&EARTH,tilttovec(torad(EARTH_DEG)),EARTH_ROTATION*speed);
-		rotateObjPos(&MOON,tilttovec(torad(MOON_DEG)),MOON_ROTATION*speed);
+//		rotateObjPos(&SUN,tilttovec(torad(SUN_DEG)),SUN_ROTATION*speed);
+//		rotateObjPos(&EARTH,tilttovec(torad(EARTH_DEG)),EARTH_ROTATION*speed);
+//		rotateObjPos(&MOON,tilttovec(torad(MOON_DEG)),MOON_ROTATION*speed);
 
-		rotateObj(&EARTH,vec3(0,1,0),EARTH_ORBIT*speed);
-		rotateObj(&MOON,vec3(0,1,0),MOON_ORBIT*speed);
+//		rotateObj(&EARTH,vec3(0,1,0),EARTH_ORBIT*speed);
+//		rotateObj(&MOON,vec3(0,1,0),MOON_ORBIT*speed);
 	}
 	glfwTerminate();	//Kill the glfw interface
 }

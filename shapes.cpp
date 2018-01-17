@@ -18,12 +18,12 @@ struct TextureStuff{
 
 typedef struct Object Object; 
 struct Object{ 
-  std::vector<glm::vec3> positions; 
-  std::vector<glm::vec3> normals;     //What are these used for? -- Lighting. 
-  std::vector<glm::vec2> uvs;     //My guess this is for textures? 
+  std::vector<vec3> positions; 
+  std::vector<vec3> normals;     //What are these used for? -- Lighting. 
+  std::vector<vec2> uvs;     //My guess this is for textures? 
   std::vector<unsigned int> indices; 
 	TextureStuff texture;
-	glm::mat4 modelview=mat4(1.f);
+	//mat4 modelview=mat4(1.0);
 	
 };
 
@@ -34,43 +34,47 @@ void nukeshape(Object *obj){
 	obj->normals.clear();
 	obj->uvs.clear();
 	obj->indices.clear();
-	obj->modelview=mat4(1.f);
+//	obj->modelview=mat4(1.0);
 }
 
 void loadTexture(Object *obj, const char* filename){
 
-  obj->texture.data = stbi_load(filename, &(obj->texture.tWidth), &(obj->texture.tHeight), &(obj->texture.components), 0);
+//  obj->texture.data = stbi_load(filename, &(obj->texture.tWidth), &(obj->texture.tHeight), &(obj->texture.components), 0);
 
 }
 
-void moveObj(Object *obj, glm::vec3 pos){
-	obj->modelview[3][0] += pos[0]; 
-	obj->modelview[3][1] += pos[1]; 
-	obj->modelview[3][2] += pos[2]; 
+void moveObj(Object *obj, vec3 pos){
+  //TODO fix.
+//	obj->modelview[3][0] += pos[0]; 
+//	obj->modelview[3][1] += pos[1]; 
+//	obj->modelview[3][2] += pos[2]; 
 }
-/*void moveObjPos(Object *obj, glm::vec3 pos){
+/*void moveObjPos(Object *obj, vec3 pos){
 	moveObj(obj,pos);
 } */
 
 void rotateObj(Object *obj,vec3 axis, float radians){
-	mat4 trans = rotateAbout(axis,radians);
+	//mat4 trans = rotateAbout(axis,radians); //TODO FIX
 
 	//Via altering modelview
-	obj->modelview = trans* obj->modelview;
+	//obj->modelview = trans* obj->modelview;
+	
 //	//via changing positions.
 //	for(int i=0; i< obj->positions.size(); i++){ //Does 
-//		obj->positions.data()[i] = trans*glm::vec4(obj->positions.data()[i],1);
+//		obj->positions.data()[i] = trans*vec4(obj->positions.data()[i],1);
 //	}
 }
 void rotateObjPos(Object *obj,vec3 axis, float radians){
-	mat4 trans = rotateAbout(axis,radians);
+	//mat4 trans = rotateAbout(axis,radians); //TODO FIX
 
 	//Via altering modelview
 //	obj->modelview = trans* obj->modelview;
 	//via changing positions.
-	for(int i=0; i< obj->positions.size(); i++){ //Does 
-		obj->positions.data()[i] = trans*glm::vec4(obj->positions.data()[i],1);
-	}
+	
+  //TODO FIX
+	//for(int i=0; i< obj->positions.size(); i++){ //Does 
+	//	obj->positions.data()[i] = trans*vec4(obj->positions.data()[i],1);
+	//}
 }
 
 void generateTri(Object *obj){	//Currently used just for debugging.
@@ -121,7 +125,8 @@ void generateTorus(Object * obj, float c_r, float t_r, int uDivisions, int vDivi
 
 
 
-      vec3 normal = normalize(pos - center);
+//      vec3 normal = normalize(pos - center); //TODO FIX
+      vec3 normal = vec3(0);
 
       obj->positions.push_back(pos);
       obj->normals.push_back(normal);
@@ -170,7 +175,7 @@ void generateSphere(Object * obj, float radius, int udiv, int vdiv){
 		float v = 0.f;
 		for(int j=0; j < vdiv; j++){ //v
 
-			glm::vec3 pos = glm::vec3(
+			vec3 pos = vec3(
 											radius*sin(uScale)*cos(vScale),
 											radius*sin(uScale)*sin(vScale),
 											radius*cos(uScale)
@@ -178,7 +183,7 @@ void generateSphere(Object * obj, float radius, int udiv, int vdiv){
 
 			obj->positions.push_back(pos);
 			obj->normals.push_back(pos);		//Normal of a sphere at origin is just the pos.
-			obj->uvs.push_back(glm::vec2(v,u));
+			obj->uvs.push_back(vec2(v,u));
 			
 			v+=vStep;
 		}
