@@ -4,17 +4,20 @@
 // #include <GL/glew.h>
 // #include <GLFW/glfw3.h>
 
-using namespace std;
+#include <iostream>
+#include <fstream>
+
+//using namespace std;
 
 
-#define lcase(X)	case(X): cout << #X << endl; break;
+#define lcase(X)	case(X): std::cout << #X << std::endl; break;
 
 
 // reports GLFW errors
 void ErrorCallback(int error, const char* description)
  {
-     cout << "GLFW ERROR " << error << ":" << endl;
-     cout << description << endl;
+     std::cout << "GLFW ERROR " << error << ":" << std::endl;
+     std::cout << description << std::endl;
  }
 
 
@@ -23,28 +26,28 @@ void check_glerror(){
 	switch (error){
 		case(GL_NO_ERROR) :
 		default :
-//			cout << GL_NO_ERROR << ":" << error << endl;
+//			std::cout << GL_NO_ERROR << ":" << error << std::endl;
 			return;
 		case(GL_INVALID_ENUM):
-			cout << "GL_INVALID_ENUM" << endl;
+			std::cout << "GL_INVALID_ENUM" << std::endl;
 			break;
 		case(GL_INVALID_VALUE):
-			cout << "GL_INVALID_VALUE" << endl;
+			std::cout << "GL_INVALID_VALUE" << std::endl;
 			break;
 		case(GL_INVALID_OPERATION):
-			cout << "GL_INVALID_OPERATION" << endl;
+			std::cout << "GL_INVALID_OPERATION" << std::endl;
 			break;
 		case(GL_INVALID_FRAMEBUFFER_OPERATION):
-			cout << "GL_INVALID_FRAMEBUFFER_OPERATION" << endl;
+			std::cout << "GL_INVALID_FRAMEBUFFER_OPERATION" << std::endl;
 			break;
 		case(GL_OUT_OF_MEMORY):
-			cout << "GL_OUT_OF_MEMORY" << endl;
+			std::cout << "GL_OUT_OF_MEMORY" << std::endl;
 			break;
 		case(GL_STACK_UNDERFLOW):
-			cout << "GL_STACK_UNDERFLOW" << endl;
+			std::cout << "GL_STACK_UNDERFLOW" << std::endl;
 			break;
 		case(GL_STACK_OVERFLOW):
-			cout << "GL_STACK_OVERFLOW" <<endl;
+			std::cout << "GL_STACK_OVERFLOW" <<std::endl;
 			break;
 	}
 }
@@ -58,7 +61,7 @@ void check_compile(GLuint vertexShader){
         glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
 		std::string infoLog(maxLength, ' ');
         glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &infoLog[0]);
-        cout << infoLog << endl;
+        std::cout << infoLog << std::endl;
         return;
         }
 	
@@ -91,27 +94,27 @@ GLFWwindow * glfw_init(int X, int Y, char const * Title){  //Initalizes and retu
 // OpenGL shader support functions
 
 // reads a text file with the given name into a string
-string LoadSource(const string &filename)
+std::string LoadSource(const std::string &filename)
 {
-    string source;
+    std::string source;
 
-    ifstream input(filename.c_str());
+    std::ifstream input(filename.c_str());
     if (input) {
-        copy(istreambuf_iterator<char>(input),
-            istreambuf_iterator<char>(),
+        copy(std::istreambuf_iterator<char>(input),
+            std::istreambuf_iterator<char>(),
             back_inserter(source));
         input.close();
     }
     else {
-        cout << "ERROR: Could not load shader source from file "
-            << filename << endl;
+        std::cout << "ERROR: Could not load shader source from file "
+            << filename << std::endl;
     }
-//	cout << "RAW READ: " << source << " : END READ" << endl;
+//	std::cout << "RAW READ: " << source << " : END READ" << std::endl;
     return source;
 }
 
 // creates and returns a shader object compiled from the given source
-GLuint CompileShader(GLenum shaderType, const string &source)
+GLuint CompileShader(GLenum shaderType, const std::string &source)
 {
     // allocate shader object name
     GLuint shaderObject = glCreateShader(shaderType);
@@ -128,11 +131,11 @@ GLuint CompileShader(GLenum shaderType, const string &source)
     {
         GLint length;
         glGetShaderiv(shaderObject, GL_INFO_LOG_LENGTH, &length);
-        string info(length, ' ');
+        std::string info(length, ' ');
         glGetShaderInfoLog(shaderObject, info.length(), &length, &info[0]);
-        cout << "ERROR compiling shader:" << endl << endl;
-        cout << source << endl;
-        cout << info << endl;
+        std::cout << "ERROR compiling shader:" << std::endl << std::endl;
+        std::cout << source << std::endl;
+        std::cout << info << std::endl;
     }
 
     return shaderObject;
@@ -153,10 +156,10 @@ GLuint LinkProgram(GLuint programObject)
     {
         GLint length;
         glGetProgramiv(programObject, GL_INFO_LOG_LENGTH, &length);
-        string info(length, ' ');
+        std::string info(length, ' ');
         glGetProgramInfoLog(programObject, info.length(), &length, &info[0]);
-        cout << "ERROR linking shader program:" << endl;
-        cout << info << endl;
+        std::cout << "ERROR linking shader program:" << std::endl;
+        std::cout << info << std::endl;
     }
 
     return programObject;
@@ -169,10 +172,10 @@ void check_gllink(GLuint programObject){
     {
         GLint length;
         glGetProgramiv(programObject, GL_INFO_LOG_LENGTH, &length);
-        string info(length, ' ');
+        std::string info(length, ' ');
         glGetProgramInfoLog(programObject, info.length(), &length, &info[0]);
-        cout << "ERROR linking program:" << endl;
-        cout << info << endl;
+        std::cout << "ERROR linking program:" << std::endl;
+        std::cout << info << std::endl;
 		exit(32);
     }
 }
@@ -191,8 +194,8 @@ void GL_error_callback(GLenum source, GLenum type, GLuint id,
 	{
 	if( true && severity != GL_DEBUG_SEVERITY_NOTIFICATION){
 
-	cout << "GL ERROR CALLBACK: " << endl;
-	cout << "Source: " << source << " : ";
+	std::cout << "GL ERROR CALLBACK: " << std::endl;
+	std::cout << "Source: " << source << " : ";
 	switch (source){
 		lcase(GL_DEBUG_SOURCE_API)
 		lcase(GL_DEBUG_SOURCE_WINDOW_SYSTEM)
@@ -202,7 +205,7 @@ void GL_error_callback(GLenum source, GLenum type, GLuint id,
 		lcase(GL_DEBUG_SOURCE_OTHER)				//THESE ARN'T DEFINED?
 	}  
 
-	cout << "Type: " <<  type << " : ";
+	std::cout << "Type: " <<  type << " : ";
 	switch (type){
 		lcase(GL_DEBUG_TYPE_ERROR)
 		lcase(GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR)
@@ -215,18 +218,18 @@ void GL_error_callback(GLenum source, GLenum type, GLuint id,
 		lcase(GL_DEBUG_TYPE_OTHER)
 	}
 		
-	cout << "ID: " << id << endl;
-	cout << "Serverity: " << severity << " : ";
+	std::cout << "ID: " << id << std::endl;
+	std::cout << "Serverity: " << severity << " : ";
 	switch (severity){
 		lcase(GL_DEBUG_SEVERITY_HIGH)
 		lcase(GL_DEBUG_SEVERITY_MEDIUM)
 		lcase(GL_DEBUG_SEVERITY_LOW)
 		lcase(GL_DEBUG_SEVERITY_NOTIFICATION)
 	}
-	cout << "Length: " << length << endl;
-	cout << "Message: " << message << endl;
-	cout << "UserParam: " << userParam << endl;
-	cout << "END: GL ERROR CALLBACK: " << endl;
+	std::cout << "Length: " << length << std::endl;
+	std::cout << "Message: " << message << std::endl;
+	std::cout << "UserParam: " << userParam << std::endl;
+	std::cout << "END: GL ERROR CALLBACK: " << std::endl;
 
 	}
 }
