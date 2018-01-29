@@ -202,42 +202,6 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 
     float move = PI/200.f;
 
-/*
-		if(key == GLFW_KEY_E)
-			cam.rotateCamera(0,-move);
-		if(key == GLFW_KEY_Q)
-			cam.rotateCamera(0,move);
-			
-		if(key == GLFW_KEY_W){
-			cam.pos += cam.dir*move;
-		}
-		if(key == GLFW_KEY_S){
-			cam.pos -= cam.dir*move;
-		}
-		if(key == GLFW_KEY_A){
-			cam.rotateCamera(-move,0);
-		}
-		if(key == GLFW_KEY_D){
-			cam.rotateCamera(move,0);
-		}
-		if(key == GLFW_KEY_Z){
-			speed -= 0.001f;
-		}
-		if(key == GLFW_KEY_X){
-			speed += 0.001f;
-		}
-		if(key == GLFW_KEY_P){
-			speed = 0;
-		}
-
-		if(length(cam.pos) < 0.2){
-			cam.pos = cam.pos*1.1f;
-		}
-		if(length(cam.pos) > 10){
-			cam.pos = cam.pos/1.01f;
-		}
-	*/	
-
 }
 
 bool mousePressed;
