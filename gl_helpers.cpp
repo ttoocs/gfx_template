@@ -1,14 +1,14 @@
 //Scott Saunders, 10163541
 //Provides OpenGL helpers
 
-// #include <GL/glew.h>
-// #include <GLFW/glfw3.h>
+//#include <GL/glew.h>
+//#include <GLFW/glfw3.h>
+#include "gl_helpers.h"
 
 #include <iostream>
 #include <fstream>
 
 //using namespace std;
-
 
 #define lcase(X)	case(X): std::cout << #X << std::endl; break;
 

@@ -3,11 +3,14 @@
 //Cpsc 453 template 
 //October 1st, 2016.
 
+
+/*
 #define GLFW_INCLUDE_GLCOREARB
 #define GL_GLEXT_PROTOTYPES
 
 #include <GLFW/glfw3.h>
 #include <unistd.h>
+*/
 
 #include <iostream>
 #include <fstream>
@@ -23,18 +26,10 @@
 
 #include <Eigen/Dense>
 
-#define PI 3.1415926535897939
 
-typedef Eigen::Matrix<float, 4, 1> vec4;
-typedef Eigen::Matrix<float, 3, 1> vec3;
-typedef Eigen::Matrix<float, 2, 1> vec2;
-
-typedef Eigen::Matrix<float, 4, 4> mat4;
-typedef Eigen::Matrix<float, 3, 3> mat3;
-typedef Eigen::Matrix<float, 2, 2> mat2;
-
-//#include "gl_helpers.cpp"
-//#include "shapes.cpp"
+#include "types.h"
+#include "gl_helpers.h"
+#include "shapes.h"
 
 
 #define WIDTH 512*2

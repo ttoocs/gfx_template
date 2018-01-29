@@ -6,28 +6,8 @@
 
 #define P_indices(X,a,b,c)	      X.push_back(a); X.push_back(b); X.push_back(c);
 
-
-typedef struct TextureStuff;
-struct TextureStuff{
-	int components;	
-	int tWidth;
-	int tHeight;
-	unsigned char* data=NULL;
-
-};
-
-typedef struct Object Object; 
-struct Object{ 
-  std::vector<vec3> positions; 
-  std::vector<vec3> normals;     //What are these used for? -- Lighting. 
-  std::vector<vec2> uvs;     //My guess this is for textures? 
-  std::vector<unsigned int> indices; 
-	TextureStuff texture;
-	//mat4 modelview=mat4(1.0);
-	
-};
-
-
+#include "shapes.h"
+#include "vector"
 
 void nukeshape(Object *obj){
 	obj->positions.clear();

@@ -25,6 +25,11 @@ endif()
 
 find_package( glfw3 REQUIRED )
 find_package( OpenGL REQUIRED )
+find_package( Eigen3 REQUIRED )
+# Use PkgConfig to find glew...
+#find_package( glew REQUIRED )
+find_package(PkgConfig)
+pkg_check_modules(glew REQUIRED glew)
 
 set(
     CMAKE_RUNTIME_OUTPUT_DIRECTORY
@@ -46,6 +51,8 @@ include_directories(
 link_libraries(
     ${OpenGL_LIBRARIES} #opengl + glu
     glfw
+    Eigen3::Eigen
+    ${glew_LIBRARIES}
     )
 
 #link_directories(
