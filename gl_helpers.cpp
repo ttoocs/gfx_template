@@ -83,6 +83,11 @@ GLFWwindow * glfw_init(int X, int Y, char const * Title){  //Initalizes and retu
 
 	glfwMakeContextCurrent(window); //Sets up a OpenGL context
 
+  //Requires OpenGL > 4.3
+//  glDebugMessageCallback(	GL_error_callback, NULL);
+//	glEnable(GL_DEBUG_OUTPUT);								//DEBUG :D
+//	glEnable( GL_DEBUG_OUTPUT_SYNCHRONOUS);	
+
 	return( window); // Windowed
 //	GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL", glfwGetPrimaryMonitor(), nullptr); // Fullscreen
 	

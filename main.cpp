@@ -142,7 +142,7 @@ void initalize_GL(){
 		glstuff.prog = glCreateProgram();
 		glstuff.vertexShader = CompileShader(GL_VERTEX_SHADER,LoadSource("vertex.glsl"));
 		glstuff.fragShader = CompileShader(GL_FRAGMENT_SHADER,LoadSource("fragment.glsl"));
-			
+	/*		
 		glAttachShader(glstuff.prog, glstuff.vertexShader);
 		glAttachShader(glstuff.prog, glstuff.fragShader);
 
@@ -190,7 +190,7 @@ void initalize_GL(){
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT ); //GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);	//Sets paramiters of the texture.
-
+  */
 
 }
 
@@ -286,11 +286,11 @@ void Update_Uniforms(){
 }
 
 	
-void Render(Object objs[4]){
+void Render(){
 	glClearColor(0,0,0,0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
-
+/*
 	for(int i =0; i < 4; i++){
 		Object *s = &objs[i];
 
@@ -315,19 +315,6 @@ void Render(Object objs[4]){
 
 
 
-		//This bit is currently broken. Incorrectly adapting the modelviews.
-			//Update model-view uniform
-			//mat4 modelview = mat4(s->modelview); //Supposed to set it to the predicesors.
-			for(int j=i; j>0; j--){
-//				modelview[3][3] += objs[j].modelview[3];
-			}
-	
-/*
-		glUniformMatrix4fv(glGetUniformLocation(glstuff.prog, "modelviewMatrix"),
-	            1,
-	            false,
-	            &modelview[0]);
-*/
 
 		//Setup texture: (IE, load them)
 		if(((*s).texture.data) != NULL){
@@ -347,15 +334,14 @@ void Render(Object objs[4]){
 		);
 		}
 
+*/
 	return;
 }
 int main(int argc, char * argv[]){
 
-	GLFWwindow * window = glfw_init(WIDTH,HEIGHT,"Scott Saunders - Assignment 5");	//Init window.
+	GLFWwindow * window = glfw_init(WIDTH,HEIGHT,"Scott Saunders - Template");	//Init window.
 
-	glDebugMessageCallback(	GL_error_callback, NULL);
-	glEnable(GL_DEBUG_OUTPUT);								//DEBUG :D
-	glEnable( GL_DEBUG_OUTPUT_SYNCHRONOUS);	
+	glfwMakeContextCurrent(window); //Sets up a OpenGL context
 
 	glfwSetKeyCallback(window, KeyCallback);
 	glfwSetCursorPosCallback(window, mousePosCallback);
@@ -366,58 +352,13 @@ int main(int argc, char * argv[]){
 
 	Update_Perspective();	//updates perspective uniform, as it's never changed.
 
-	#define MOON bodies[3]
-	#define EARTH bodies[2]
-	#define SUN bodies[1]
-	#define SPACE bodies[0]
-	
-	#define SPHERE_QUAL 128	
-
-//	cam.pos = glm::vec3(0,0,4);
-	Object bodies[4];
-	
-	#define mylog(X) log(X)/50.f //Note, this is from KM, to 0->10ish space.
-
-	#define tilttovec(X)	vec3(0,cos(X),0)
-
-/*
-	float sun_r		=	mylog(SUN_RADIUS);
-	float earth_r = mylog(EARTH_RADIUS);
-	float moon_r  = mylog(MOON_RADIUS);
-	
-	generateSphere(&SPACE,10,SPHERE_QUAL,SPHERE_QUAL);
-	loadTexture(&SPACE,"./textures/notquite_space.png");
-	rotateObjPos(&SPACE,glm::vec3(-1,0,0),torad(90));	//Rotate object for texture
-
-	generateSphere(&SUN,sun_r,SPHERE_QUAL,SPHERE_QUAL);
-	loadTexture(&SUN,"./textures/texture_sun.jpg");
-	rotateObjPos(&SUN,glm::vec3(-1,0,0),torad(90));		//Rotate object for texture
-
-	generateSphere(&EARTH,earth_r,SPHERE_QUAL,SPHERE_QUAL);
-	loadTexture(&EARTH,"./textures/texture_earth_surface.jpg");
-	rotateObjPos(&EARTH,glm::vec3(-1,0,0),torad(90)); //Rotate object for texture
-
-	generateSphere(&MOON,moon_r,SPHERE_QUAL,SPHERE_QUAL);
-	loadTexture(&MOON,"./textures/texture_moon.jpg");
-	rotateObjPos(&MOON,glm::vec3(-1,0,0),torad(90));	//Rotate object for texture
-
-	moveObj(&EARTH,vec3(0,0,mylog(EARTH_P_DIST)*5));
-	moveObj(&MOON,vec3(0,0,mylog(MOON_P_DIST)*5));
-*/
 	speed =0.01;
 	while(!glfwWindowShouldClose(window))
 	{ //Main loop.
-		Render(bodies);
+		Render();
     glfwSwapBuffers(window);
 		glfwPollEvents();
 
-		
-//		rotateObjPos(&SUN,tilttovec(torad(SUN_DEG)),SUN_ROTATION*speed);
-//		rotateObjPos(&EARTH,tilttovec(torad(EARTH_DEG)),EARTH_ROTATION*speed);
-//		rotateObjPos(&MOON,tilttovec(torad(MOON_DEG)),MOON_ROTATION*speed);
-
-//		rotateObj(&EARTH,vec3(0,1,0),EARTH_ORBIT*speed);
-//		rotateObj(&MOON,vec3(0,1,0),MOON_ORBIT*speed);
 	}
 	glfwTerminate();	//Kill the glfw interface
 }
