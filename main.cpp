@@ -33,8 +33,8 @@ typedef Eigen::Matrix<float, 4, 4> mat4;
 typedef Eigen::Matrix<float, 3, 3> mat3;
 typedef Eigen::Matrix<float, 2, 2> mat2;
 
-#include "gl_helpers.cpp"
-#include "shapes.cpp"
+//#include "gl_helpers.cpp"
+//#include "shapes.cpp"
 
 
 #define WIDTH 512*2
