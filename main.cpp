@@ -128,8 +128,7 @@ struct GLSTUFF{
 GLSTUFF glstuff;
 
 
-void initalize_GL(){
-	
+void initalize_GL(){	
 		glEnable(GL_DEPTH_TEST); 		//Turn on depth testing
 		glDepthFunc(GL_LEQUAL); 			//Configure depth testing
 		//glDepthFunc(GL_ALWAYS);
@@ -291,9 +290,6 @@ void Render(){
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
 /*
-	for(int i =0; i < 4; i++){
-		Object *s = &objs[i];
-
 		glUseProgram(glstuff.prog);
 		glBindVertexArray(glstuff.vertexarray);
 		glUseProgram(glstuff.prog);
@@ -304,28 +300,6 @@ void Render(){
 			glBindBuffer(GL_ARRAY_BUFFER,glstuff.vertexbuffer);	//Setup data-copy (points)
 			glBufferData(GL_ARRAY_BUFFER,sizeof(vec3)*s->positions.size(),s->positions.data(),GL_DYNAMIC_DRAW);
 
-			glBindBuffer(GL_ARRAY_BUFFER,glstuff.normalbuffer);	//Setup data-copy (norms)
-			glBufferData(GL_ARRAY_BUFFER,sizeof(vec3)*s->normals.size(),s->normals.data(),GL_DYNAMIC_DRAW);
-
-			glBindBuffer(GL_ARRAY_BUFFER,glstuff.uvsbuffer);	//Setup data-copy (uvs)
-			glBufferData(GL_ARRAY_BUFFER,sizeof(vec2)*s->uvs.size(),s->uvs.data(),GL_DYNAMIC_DRAW);
-
-			glBindBuffer(GL_ARRAY_BUFFER,glstuff.indiciesbuffer);	//Setup data-copy	(indicies)
-			glBufferData(GL_ARRAY_BUFFER,sizeof(unsigned int)*s->indices.size(),s->indices.data(),GL_DYNAMIC_DRAW);
-
-
-
-
-		//Setup texture: (IE, load them)
-		if(((*s).texture.data) != NULL){
-			if(s->texture.components==3)
-	      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, s->texture.tWidth, s->texture.tHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, (const void *) s->texture.data);
-	    else if(s->texture.components==4)
-	      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, s->texture.tWidth, s->texture.tHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, (const void *) s->texture.data);
-	
-		} 
-		//Actually draw.
-	
 		glDrawElements(
 			GL_TRIANGLES,   //What shape we're drawing  - GL_TRIANGLES, GL_LINES, GL_POINTS, GL_QUADS, GL_TRIANGLE_STRIP
 			s->indices.size(),    //How many indices
