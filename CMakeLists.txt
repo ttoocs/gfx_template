@@ -45,7 +45,6 @@ set(
 
 add_definitions(
     -std=c++11
-    -DCMAKE
     )
 
 #Handles includes (via directories)
