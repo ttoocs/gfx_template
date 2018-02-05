@@ -1,9 +1,6 @@
 //Scott Saunders, 10163541
 //Provides OpenGL helpers
 
-// #include <GL/glew.h>
-// #include <GLFW/glfw3.h>
-
 #pragma once
 #include <iostream>
 #include <fstream>
@@ -11,11 +8,8 @@
 #define GLFW_INCLUDE_GLCOREARB
 #define GL_GLEXT_PROTOTYPES
 
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #define MYGLUEMARK
-
-//using namespace std;
 
 
 #define lcase(X)	case(X): std::cout << #X << std::endl; break;
