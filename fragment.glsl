@@ -26,8 +26,8 @@ void main(void)
 //	coord.x /= dimentions.x;
 //	coord.y /= dimentions.y;
 
-	coord.x = coord.x + 1f;
-	coord.y = coord.y + 1f;
+	coord.x = coord.x + 1.f;
+	coord.y = coord.y + 1.f;
 
 	coord.x /= 2;
 	coord.y /= 2;
