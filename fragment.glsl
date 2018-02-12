@@ -1,9 +1,6 @@
-// ==========================================================================
-// Vertex program for barebones GLFW boilerplate
-//
-// Author:  Sonny Chan, University of Calgary
-// Date:    December 2015
-// ==========================================================================
+//Simple fragment shader
+
+
 #version 430
 
 // interpolated colour received from vertex stage
@@ -33,7 +30,7 @@ void main(void)
 	coord.y /= 2;
 
 //	colour = texture(image,uv);
-	colour = texture(image,FragUV);
+//	colour = texture(image,FragUV);
 	
 //	colour = vec4(FragNormal,0);
 
