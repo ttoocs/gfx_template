@@ -4,14 +4,6 @@
 //October 1st, 2016.
 
 
-/*
-#define GLFW_INCLUDE_GLCOREARB
-#define GL_GLEXT_PROTOTYPES
-
-#include <GLFW/glfw3.h>
-#include <unistd.h>
-*/
-
 #include <iostream>
 #include <fstream>
 #include <algorithm>
@@ -37,15 +29,6 @@
 
 
 
-/*
-#include	"glm/glm.hpp"
-#include	"glm/gtc/matrix_transform.hpp"
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-
-#include "camera.cpp"
-#include "planets.h"
 
 //#define WIREFRAME
 #define DEBUG
@@ -59,60 +42,9 @@
 
 #define torad(X)	((float)(X*PI/180.f))
 
-// #define V_PUSH(X,a,b,c) X.push_back(a); X.push_back(b); X.push_back(c);
-#define V_PUSH(X,a,b,c) X.push_back(vec3(a,b,c));	//Re-wrttien for GLM.
-*/
-
 using namespace std;
 
-// Camera cam;
-
 float speed = 1;
-/*
-GLfloat step = 0.1;
-GLfloat trans[3][3] = {{1,0,0},{0,1,0},{0,0,1}};
-GLfloat offset[3] = {0,0,0};
-GLfloat theta = 0.f;
-GLfloat FOV = PI/6.f;
-
-void recalc_trans(GLfloat newtheta){
-	theta += newtheta;
-	trans[0][0]=cos(theta);
-	trans[0][2]=-sin(theta);
-	trans[2][0]=sin(theta);
-	trans[2][2]=cos(theta);
-
-//	GLfloat newoff[3] = {
-//		offset[0]*cos(newtheta)+offset[2]*sin(newtheta),
-//		offset[1],
-//		-offset[0]*sin(newtheta)+offset[2]*cos(newtheta)};
-//		offset[2]};
-//	offset[0]=newoff[0];
-//	offset[1]=newoff[1];	//Could be done better, but alas.
-//	offset[2]=newoff[2];
-}
-
-void add_offset(float addoffset[3]){
-	GLfloat newoff[3] = {
-		addoffset[0]*cos(theta)+addoffset[2]*sin(theta),
-		addoffset[1],
-		-addoffset[0]*sin(theta)+addoffset[2]*cos(theta)};
-	offset[0]+=newoff[0];
-	offset[1]+=newoff[1];	//Could be done better, but alas.
-	offset[2]+=newoff[2];
-	
-}
-
-void reset_trans(){
-	recalc_trans(-theta);
-	offset[0]=0;
-	offset[1]=0;
-	offset[2]=6;
-	FOV = PI/6;
-}
-
-*/
-
 
 struct GLSTUFF{
 	GLuint prog;
@@ -131,7 +63,6 @@ GLSTUFF glstuff;
 void initalize_GL(){	
 		glEnable(GL_DEPTH_TEST); 		//Turn on depth testing
 		glDepthFunc(GL_LEQUAL); 			//Configure depth testing
-		//glDepthFunc(GL_ALWAYS);
 
 		#ifdef WIREFRAME
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
