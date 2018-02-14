@@ -24,7 +24,7 @@ struct Object{
   std::vector<vec2> uvs;     //My guess this is for textures? 
   std::vector<unsigned int> indices; 
 	TextureStuff texture;
-	//mat4 modelview=mat4(1.0);
+	mat4 modelview;
 };
 
 void nukeshape(Object *obj);

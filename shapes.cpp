@@ -25,9 +25,9 @@ void loadTexture(Object *obj, const char* filename){
 
 void moveObj(Object *obj, vec3 pos){
   //TODO fix.
-//	obj->modelview[3][0] += pos[0]; 
-//	obj->modelview[3][1] += pos[1]; 
-//	obj->modelview[3][2] += pos[2]; 
+	obj->modelview(3,0) += pos(0); 
+	obj->modelview(3,1) += pos(1); 
+	obj->modelview(3,2) += pos(2); 
 }
 /*void moveObjPos(Object *obj, vec3 pos){
 	moveObj(obj,pos);
