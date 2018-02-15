@@ -72,12 +72,14 @@ void initalize_GL(){
 		glstuff.prog = glCreateProgram();
 		glstuff.vertexShader = CompileShader(GL_VERTEX_SHADER,LoadSource("vertex.glsl"));
 		glstuff.fragShader = CompileShader(GL_FRAGMENT_SHADER,LoadSource("fragment.glsl"));
-	/*		
+
+      //Attaching to prog
 		glAttachShader(glstuff.prog, glstuff.vertexShader);
 		glAttachShader(glstuff.prog, glstuff.fragShader);
 
 			//Attrib things here
 
+      //Linking/compiling
 		glLinkProgram(glstuff.prog);	//Link to full program.
 		check_gllink(glstuff.prog);
 
@@ -112,7 +114,7 @@ void initalize_GL(){
 		glBindVertexArray(0);
 
 		//Texture stuff
-
+/*
 		glGenTextures(1,&glstuff.texture);
 		glBindTexture(GL_TEXTURE_2D, glstuff.texture);
 		
@@ -120,7 +122,7 @@ void initalize_GL(){
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT ); //GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);	//Sets paramiters of the texture.
-  */
+//  */
 
 }
 
@@ -169,7 +171,9 @@ void Update_Perspective(){
 */
 }
 
-void Update_Uniforms(){
+void Update_GPU_data(){
+//		glBindBuffer(GL_ARRAY_BUFFER,glstuff.vertexbuffer);	//Setup data-copy (points)
+//		glBufferData(GL_ARRAY_BUFFER,sizeof(vec3)*s->positions.size(),s->positions.data(),GL_DYNAMIC_DRAW);
 /*
 	glm::mat4 camMatrix = cam.getMatrix();
   glUniformMatrix4fv(glGetUniformLocation(glstuff.prog, "cameraMatrix"),
@@ -184,16 +188,12 @@ void Render(){
 	glClearColor(0,0,0,0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
-/*
-		glUseProgram(glstuff.prog);
-		glBindVertexArray(glstuff.vertexarray);
-		glUseProgram(glstuff.prog);
+// /*
+  	glUseProgram(glstuff.prog);
+  	glBindVertexArray(glstuff.vertexarray);
+  	glUseProgram(glstuff.prog);
 	
-		Update_Uniforms();
-
-		//Copy data:
-			glBindBuffer(GL_ARRAY_BUFFER,glstuff.vertexbuffer);	//Setup data-copy (points)
-			glBufferData(GL_ARRAY_BUFFER,sizeof(vec3)*s->positions.size(),s->positions.data(),GL_DYNAMIC_DRAW);
+    Update_GPU_data();
 
 		glDrawElements(
 			GL_TRIANGLES,   //What shape we're drawing  - GL_TRIANGLES, GL_LINES, GL_POINTS, GL_QUADS, GL_TRIANGLE_STRIP
@@ -203,7 +203,7 @@ void Render(){
 		);
 		}
 
-*/
+// */
 	return;
 }
 int main(int argc, char * argv[]){
