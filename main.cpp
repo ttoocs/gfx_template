@@ -194,7 +194,7 @@ void Render(){
   	glUseProgram(glstuff.prog);
 	
     Update_GPU_data();
-
+/*
 		glDrawElements(
 			GL_TRIANGLES,   //What shape we're drawing  - GL_TRIANGLES, GL_LINES, GL_POINTS, GL_QUADS, GL_TRIANGLE_STRIP
 			s->indices.size(),    //How many indices
@@ -202,6 +202,7 @@ void Render(){
 			0
 		);
 		}
+*/
 
 // */
 	return;
