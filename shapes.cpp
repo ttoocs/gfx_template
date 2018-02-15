@@ -14,7 +14,7 @@ void nukeshape(Object *obj){
 	obj->normals.clear();
 	obj->uvs.clear();
 	obj->indices.clear();
-//	obj->modelview=mat4(1.0);
+	obj->modelview.setIdentity();
 }
 
 void loadTexture(Object *obj, const char* filename){
@@ -53,7 +53,7 @@ void rotateObjPos(Object *obj,vec3 axis, float radians){
 	
   //TODO FIX
 	//for(int i=0; i< obj->positions.size(); i++){ //Does 
-	//	obj->positions.data()[i] = trans*vec4(obj->positions.data()[i],1);
+  //    obj->positions.data()[i] = trans*vec4(obj->positions.data()[i],1);
 	//}
 }
 
