@@ -71,4 +71,5 @@ add_executable(
     main.cpp
     gl_helpers.cpp
     shapes.cpp
+    input.cpp
 )
