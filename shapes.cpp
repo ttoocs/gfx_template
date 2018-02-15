@@ -2,8 +2,7 @@
 
 #define torad(X)  ((float)(X*PI/180.f))
 
-#define V_PUSH(X,a,b,c) X.push_back(vec3(a,b,c)); //Re-wrttien for GLM.
-
+#define V_PUSH(X,a,b,c) X.push_back(vec3(a,b,c));
 #define P_indices(X,a,b,c)	      X.push_back(a); X.push_back(b); X.push_back(c);
 
 #include "shapes.h"
@@ -29,9 +28,6 @@ void moveObj(Object *obj, vec3 pos){
 	obj->modelview(3,1) += pos(1); 
 	obj->modelview(3,2) += pos(2); 
 }
-/*void moveObjPos(Object *obj, vec3 pos){
-	moveObj(obj,pos);
-} */
 
 void rotateObj(Object *obj,vec3 axis, float radians){
 	//mat4 trans = rotateAbout(axis,radians); //TODO FIX
@@ -105,8 +101,9 @@ void generateTorus(Object * obj, float c_r, float t_r, int uDivisions, int vDivi
 
 
 
-//      vec3 normal = normalize(pos - center); //TODO FIX
-      vec3 normal = vec3(0);
+      vec3 normal = (pos - center);
+      normal.normalize();
+
 
       obj->positions.push_back(pos);
       obj->normals.push_back(normal);
