@@ -22,7 +22,7 @@
 #include "types.h"
 #include "gl_helpers.h"
 #include "shapes.h"
-
+#include "input.h"
 
 
 
@@ -70,11 +70,14 @@ void initalize_GL(){
 		glstuff.prog = glCreateProgram();
 		glstuff.vertexShader = CompileShader(GL_VERTEX_SHADER,LoadSource("vertex.glsl"));
 		glstuff.fragShader = CompileShader(GL_FRAGMENT_SHADER,LoadSource("fragment.glsl"));
+
+    //Attaching to prog
 		glAttachShader(glstuff.prog, glstuff.vertexShader);
 		glAttachShader(glstuff.prog, glstuff.fragShader);
 
 			//Attrib things here
 
+      //Linking/compiling
 		glLinkProgram(glstuff.prog);	//Link to full program.
 		check_gllink(glstuff.prog);
 
@@ -110,7 +113,7 @@ void initalize_GL(){
 		glBindVertexArray(0);
 
 		//Texture stuff
-
+/*
 		glGenTextures(1,&glstuff.texture);
 		glBindTexture(GL_TEXTURE_2D, glstuff.texture);
 		
@@ -118,45 +121,9 @@ void initalize_GL(){
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT ); //GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);	//Sets paramiters of the texture.
-  */
+//  */
 
 }
-
-// */
-// handles keyboard input events
-void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
-
-    float move = PI/200.f;
-
-}
-
-bool mousePressed;
-void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
-{
-  if( (action == GLFW_PRESS) || (action == GLFW_RELEASE) )
-    mousePressed = !mousePressed;
-}
-
-
-vec2 mousePos;
-void mousePosCallback(GLFWwindow* window, double xpos, double ypos)
-{
-  int vp[4];
-  glGetIntegerv(GL_VIEWPORT, vp);
-
-  //vec2 newPos = vec2(xpos/(double)vp[2], -ypos/(double)vp[3])*2.f - vec2(1.f);
-
-//  vec2 diff = newPos - mousePos;
-/*
-  if(mousePressed)
-    cam.rotateCamera(-diff.x, diff.y);
-*/
- // mousePos = newPos;
-}
-
 
 void Update_Perspective(){
 /*	glm::mat4 perspectiveMatrix = glm::perspective(torad(80.f), 1.f, 0.1f, 20.f);
@@ -167,7 +134,9 @@ void Update_Perspective(){
 */
 }
 
-void Update_Uniforms(){
+void Update_GPU_data(){
+//		glBindBuffer(GL_ARRAY_BUFFER,glstuff.vertexbuffer);	//Setup data-copy (points)
+//		glBufferData(GL_ARRAY_BUFFER,sizeof(vec3)*s->positions.size(),s->positions.data(),GL_DYNAMIC_DRAW);
 /*
 	glm::mat4 camMatrix = cam.getMatrix();
   glUniformMatrix4fv(glGetUniformLocation(glstuff.prog, "cameraMatrix"),
@@ -182,17 +151,13 @@ void Render(){
 	glClearColor(0,0,0,0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
-/*
-		glUseProgram(glstuff.prog);
-		glBindVertexArray(glstuff.vertexarray);
-		glUseProgram(glstuff.prog);
+// /*
+  	glUseProgram(glstuff.prog);
+  	glBindVertexArray(glstuff.vertexarray);
+  	glUseProgram(glstuff.prog);
 	
-		Update_Uniforms();
-
-		//Copy data:
-			glBindBuffer(GL_ARRAY_BUFFER,glstuff.vertexbuffer);	//Setup data-copy (points)
-			glBufferData(GL_ARRAY_BUFFER,sizeof(vec3)*s->positions.size(),s->positions.data(),GL_DYNAMIC_DRAW);
-
+    Update_GPU_data();
+/*
 		glDrawElements(
 			GL_TRIANGLES,   //What shape we're drawing  - GL_TRIANGLES, GL_LINES, GL_POINTS, GL_QUADS, GL_TRIANGLE_STRIP
 			s->indices.size(),    //How many indices
@@ -200,8 +165,9 @@ void Render(){
 			0
 		);
 		}
-
 */
+
+// */
 	return;
 }
 int main(int argc, char * argv[]){
@@ -210,9 +176,7 @@ int main(int argc, char * argv[]){
 
 	glfwMakeContextCurrent(window); //Sets up a OpenGL context
 
-	glfwSetKeyCallback(window, KeyCallback);
-	glfwSetCursorPosCallback(window, mousePosCallback);
-	glfwSetMouseButtonCallback(window, mouseButtonCallback);	
+  input::setup(window);
 
 
 	initalize_GL();
