@@ -70,7 +70,6 @@ void initalize_GL(){
 		glstuff.prog = glCreateProgram();
 		glstuff.vertexShader = CompileShader(GL_VERTEX_SHADER,LoadSource("vertex.glsl"));
 		glstuff.fragShader = CompileShader(GL_FRAGMENT_SHADER,LoadSource("fragment.glsl"));
-	/*		
 		glAttachShader(glstuff.prog, glstuff.vertexShader);
 		glAttachShader(glstuff.prog, glstuff.fragShader);
 
@@ -79,6 +78,7 @@ void initalize_GL(){
 		glLinkProgram(glstuff.prog);	//Link to full program.
 		check_gllink(glstuff.prog);
 
+	/*		
 		//Vertex stuffs
 
 		glUseProgram(glstuff.prog);
