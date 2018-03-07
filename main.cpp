@@ -81,14 +81,15 @@ void initalize_GL(){
 		glLinkProgram(glstuff.prog);	//Link to full program.
 		check_gllink(glstuff.prog);
 
-	/*		
+			
 		//Vertex stuffs
 
 		glUseProgram(glstuff.prog);
 		glGenVertexArrays(1, &glstuff.vertexarray);
 		glGenBuffers(1, &glstuff.vertexbuffer);
-		glGenBuffers(1, &glstuff.normalbuffer);
-		glGenBuffers(1, &glstuff.uvsbuffer);
+
+//		glGenBuffers(1, &glstuff.normalbuffer);
+//		glGenBuffers(1, &glstuff.uvsbuffer);
 		glGenBuffers(1, &glstuff.indiciesbuffer);
 	
 		glBindVertexArray(glstuff.vertexarray);
@@ -96,16 +97,16 @@ void initalize_GL(){
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vec3), 0);	//Points
 		glEnableVertexAttribArray(0);
 
-		glBindVertexArray(glstuff.vertexarray);
-		glBindBuffer(GL_ARRAY_BUFFER,glstuff.normalbuffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vec3), 0); //Normals
-		glEnableVertexAttribArray(1);
-
-		glBindVertexArray(glstuff.vertexarray);
-		glBindBuffer(GL_ARRAY_BUFFER,glstuff.uvsbuffer);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vec2), 0); //UVS
-		glEnableVertexAttribArray(2);
-		
+//		glBindVertexArray(glstuff.vertexarray);
+//		glBindBuffer(GL_ARRAY_BUFFER,glstuff.normalbuffer);
+//		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vec3), 0); //Normals
+//		glEnableVertexAttribArray(1);
+//
+//		glBindVertexArray(glstuff.vertexarray);
+//		glBindBuffer(GL_ARRAY_BUFFER,glstuff.uvsbuffer);
+//		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vec2), 0); //UVS
+//		glEnableVertexAttribArray(2);
+//		
 		glBindVertexArray(glstuff.vertexarray);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,glstuff.indiciesbuffer);	//Indices
 
@@ -146,28 +147,35 @@ void Update_GPU_data(){
 */
 }
 
+Object sphere;
+
 	
 void Render(){
-	glClearColor(0,0,0,0);
+	glClearColor(0.5,0,0,0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
-// /*
-  	glUseProgram(glstuff.prog);
-  	glBindVertexArray(glstuff.vertexarray);
-  	glUseProgram(glstuff.prog);
-	
-    Update_GPU_data();
-/*
-		glDrawElements(
-			GL_TRIANGLES,   //What shape we're drawing  - GL_TRIANGLES, GL_LINES, GL_POINTS, GL_QUADS, GL_TRIANGLE_STRIP
-			s->indices.size(),    //How many indices
-			GL_UNSIGNED_INT,  //Type
-			0
-		);
-		}
-*/
+	glUseProgram(glstuff.prog);
+ 	glBindVertexArray(glstuff.vertexarray);
+ 	glUseProgram(glstuff.prog);
 
-// */
+//	  Update_Perspective();	//updates perspective uniform, as it's never changed.
+//    Update_GPU_data();
+
+  glBindBuffer(GL_ARRAY_BUFFER,glstuff.vertexbuffer);
+  glBufferData(GL_ARRAY_BUFFER,sizeof(vec3)*sphere.positions.size(),sphere.positions.data(),GL_DYNAMIC_DRAW); 
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,glstuff.indiciesbuffer);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(GLuint)*sphere.indices.size(),sphere.indices.data(),GL_DYNAMIC_DRAW);
+
+//  glDrawArrays(GL_TRIANGLES,0,3);
+
+	glDrawElements(
+  	GL_TRIANGLES,   //What shape we're drawing  - GL_TRIANGLES, GL_LINES, GL_POINTS, GL_QUADS, GL_TRIANGLE_STRIP
+		sphere.indices.size(),    //How many indices
+		GL_UNSIGNED_INT,  //Type
+		0
+	);
+
+
 	return;
 }
 int main(int argc, char * argv[]){
@@ -178,12 +186,13 @@ int main(int argc, char * argv[]){
 
   input::setup(window);
 
-
 	initalize_GL();
 
-	Update_Perspective();	//updates perspective uniform, as it's never changed.
 
 	speed =0.01;
+
+  generateSphere(&sphere,0.1,10,10);
+
 	while(!glfwWindowShouldClose(window))
 	{ //Main loop.
     

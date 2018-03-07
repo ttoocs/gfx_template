@@ -36,5 +36,6 @@ void main(void)
 
 //	colour = vec4(vec3(gl_FragCoord.z),1.0f);
 
+    colour = vec4(1,1,1,0);
     FragmentColour = colour;
 }
