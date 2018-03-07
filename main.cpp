@@ -24,10 +24,6 @@
 #include "shapes.h"
 
 
-#define WIDTH 512*2
-#define HEIGHT 512*2
-
-
 
 
 //#define WIREFRAME
@@ -59,6 +55,8 @@ struct GLSTUFF{
 };
 GLSTUFF glstuff;
 
+int WIDTH = 512;
+int HEIGHT = 512;
 
 void initalize_GL(){	
 		glEnable(GL_DEPTH_TEST); 		//Turn on depth testing
@@ -224,6 +222,9 @@ int main(int argc, char * argv[]){
 	speed =0.01;
 	while(!glfwWindowShouldClose(window))
 	{ //Main loop.
+    
+    glfwGetFramebufferSize(window, &WIDTH, &HEIGHT);
+
 		Render();
     glfwSwapBuffers(window);
 		glfwPollEvents();
