@@ -13,7 +13,8 @@ void nukeshape(Object *obj){
 	obj->normals.clear();
 	obj->uvs.clear();
 	obj->indices.clear();
-	obj->modelview.setIdentity();
+//	obj->modelview.setIdentity();
+  obj->modelview=mat4(1.f);
 }
 
 void loadTexture(Object *obj, const char* filename){
@@ -23,10 +24,9 @@ void loadTexture(Object *obj, const char* filename){
 }
 
 void moveObj(Object *obj, vec3 pos){
-  //TODO fix.
-	obj->modelview(3,0) += pos(0); 
-	obj->modelview(3,1) += pos(1); 
-	obj->modelview(3,2) += pos(2); 
+  obj->modelview[3][0] += pos[0]; 
+  obj->modelview[3][1] += pos[1]; 
+  obj->modelview[3][2] += pos[2]; 
 }
 
 void rotateObj(Object *obj,vec3 axis, float radians){
@@ -101,8 +101,8 @@ void generateTorus(Object * obj, float c_r, float t_r, int uDivisions, int vDivi
 
 
 
-      vec3 normal = (pos - center);
-      normal.normalize();
+      vec3 normal = normalize(pos - center);
+      //normal.normalize();
 
 
       obj->positions.push_back(pos);
