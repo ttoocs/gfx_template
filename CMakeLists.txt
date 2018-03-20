@@ -25,14 +25,7 @@ endif()
 
 find_package( glfw3 REQUIRED )
 find_package( OpenGL REQUIRED )
-find_package( Eigen3 QUIET )
-if( NOT Eigen3_FOUND)
-  message( "Attempting to locate local eigen install as 'Eigen'")
-  if(NOT EXISTS ${CMAKE_SOURCE_DIR}/Eigen)
-    message( FATAL_ERROR "TODO: Locate Eigen3" )
-  endif()
-  
-endif()
+
 
 # Use PkgConfig to find glew...
 #find_package( glew REQUIRED )
@@ -54,9 +47,6 @@ include_directories(
 
 
 #Handles linking (Via the libraries)
-if( Eigen3_FOUND)
-  link_libraries(Eigen3::Eigen)
-endif()
 link_libraries(
     ${OpenGL_LIBRARIES} #opengl + glu
     glfw
